@@ -17,7 +17,7 @@ body { font-family: 'Segoe UI', sans-serif; }
 
 # ------------------------- Header -------------------------
 st.markdown("<div class='big-title'>🛠 AI Multi-Tool Suite</div>", unsafe_allow_html=True)
-st.markdown("<div class='sub'>Generate blogs, news, stories, memes, captions, SEO keywords, emails, YouTube scripts, and more — all powered by Grok 4.1 Fast.</div>", unsafe_allow_html=True)
+st.markdown("<div class='sub'>Generate blogs, news, stories, memes, captions, SEO keywords, emails, and more — all powered by Grok 4.1 Fast.</div>", unsafe_allow_html=True)
 st.markdown("<p style='color:orange; font-size:14px;'>⚠️ On mobile devices, click the &gt;&gt; icon at the top-left to select tools.</p>", unsafe_allow_html=True)
 st.markdown("---")
 
@@ -35,8 +35,7 @@ tool = st.sidebar.radio(
         "Story Writer",
         "Social Media Caption Writer",
         "SEO Keyword Generator",
-        "AI Email Writer",
-        "YouTube Script Writer"
+        "AI Email Writer"
     ]
 )
 st.sidebar.info("Model: x-ai/grok-4.1-fast:free (via OpenRouter)")
@@ -179,20 +178,5 @@ elif tool == "AI Email Writer":
         output = generate_with_spinner(prompt)
         st.text_area("Generated Email", value=output, height=300)
         st.download_button("📥 Download Email", output, file_name="email.txt")
-
-# -------- YouTube Script Writer --------
-elif tool == "YouTube Script Writer":
-    st.header("🎬 YouTube Script Writer")
-    topic = st.text_input("Video Topic:", "")
-    tone = st.selectbox("Script Tone:", ["Informative", "Funny", "Persuasive", "Casual"])
-    length = st.slider("Script Length (words):", 200, 2000, 800, 50)
-    if st.button("Generate Script"):
-        if not topic.strip():
-            st.warning("Please enter a video topic.")
-        else:
-            prompt = f"Write a {length}-word YouTube video script about: '{topic}'. Tone: {tone}. Include engaging intro, main points, and a call-to-action."
-            output = generate_with_spinner(prompt, "⏳ Generating YouTube script...")
-            st.text_area("Generated Script", value=output, height=400)
-            st.download_button("📥 Download Script", output, file_name=f"{topic[:20]}_script.txt")
 
 st.markdown("</div>", unsafe_allow_html=True)
