@@ -1,12 +1,29 @@
-def generate_logo_prompt(brand, desc):
-    return f"""
-You are an SVG logo generator AI.
-Generate a minimal, clean SVG logo (SVG code only, no explanation).
-Brand: {brand}
-Description: {desc}
-Rules:
-- SVG only
-- No HTML or CSS
-- Professional and unique
-Return ONLY the SVG code.
-"""
+import requests
+import os
+
+OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+MODEL_NAME = "x-ai/grok-4.1-fast:free"
+
+
+def call_openrouter(prompt):
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}"
+    }
+
+    data = {
+        "model": MODEL_NAME,
+        "messages": [
+            {"role": "user", "content": prompt}
+        ]
+    }
+
+    response = requests.post(OPENROUTER_API_URL, json=data, headers=headers)
+
+    if response.status_code != 200:
+        return f"❌ API Error: {response.text}"
+
+    try:
+        return response.json()["choices"][0]["message"]["content"]
+    except:
+        return "❌ Unexpected API response format."
