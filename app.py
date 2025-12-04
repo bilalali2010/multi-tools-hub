@@ -38,7 +38,7 @@ tool = st.sidebar.radio(
         "AI Email Writer"
     ]
 )
-st.sidebar.info("Model: x-ai/grok-4.1-fast:free (via OpenRouter)")
+st.sidebar.info("Model:arcee-ai/trinity-mini(via OpenRouter)")
 
 # ------------------------- Helper Function -------------------------
 def generate_with_spinner(prompt, message="⏳ Generating response..."):
