@@ -17,7 +17,7 @@ body { font-family: 'Segoe UI', sans-serif; }
 
 # ------------------------- Header -------------------------
 st.markdown("<div class='big-title'>🛠 AI Multi-Tool Suite</div>", unsafe_allow_html=True)
-st.markdown("<div class='sub'>Generate blogs, news, stories, memes, captions, SEO keywords, emails, and more — all powered by Grok 4.1 Fast.</div>", unsafe_allow_html=True)
+st.markdown("<div class='sub'>Generate blogs, news, stories, memes, captions, SEO keywords, emails, and more... </div>", unsafe_allow_html=True)
 st.markdown("---")
 
 # ------------------------- Tool Selection (MAIN PAGE) -------------------------
