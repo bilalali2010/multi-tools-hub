@@ -18,13 +18,11 @@ body { font-family: 'Segoe UI', sans-serif; }
 # ------------------------- Header -------------------------
 st.markdown("<div class='big-title'>🛠 AI Multi-Tool Suite</div>", unsafe_allow_html=True)
 st.markdown("<div class='sub'>Generate blogs, news, stories, memes, captions, SEO keywords, emails, and more — all powered by Grok 4.1 Fast.</div>", unsafe_allow_html=True)
-st.markdown("<p style='color:orange; font-size:14px;'>⚠️ On mobile devices, click the &gt;&gt; icon at the top-left to select tools.</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# ------------------------- Sidebar -------------------------
-st.sidebar.title("⚙️ Tools")
-tool = st.sidebar.radio(
-    "Select a tool:",
+# ------------------------- Tool Selection (MAIN PAGE) -------------------------
+tool = st.radio(
+    "🔧 Select a Tool",
     [
         "Logo Prompt Generator",
         "AI Chatbot",
@@ -36,9 +34,14 @@ tool = st.sidebar.radio(
         "Social Media Caption Writer",
         "SEO Keyword Generator",
         "AI Email Writer"
-    ]
+    ],
+    horizontal=True
 )
-st.sidebar.info("Model:arcee-ai/trinity-mini(via OpenRouter)")
+
+st.markdown("---")
+
+# ------------------------- Sidebar (Info Only) -------------------------
+st.sidebar.info("Model: arcee-ai/trinity-mini (via OpenRouter)")
 
 # ------------------------- Helper Function -------------------------
 def generate_with_spinner(prompt, message="⏳ Generating response..."):
@@ -126,7 +129,7 @@ elif tool == "News Article Writer":
     length = st.selectbox("Length:", ["Short (300-400)", "Standard (400-700)", "Long (700-1200)"])
     if st.button("Generate Article"):
         length_map = {"Short (300-400)": 350, "Standard (400-700)": 550, "Long (700-1200)": 900}
-        prompt = f"Write a news article.\nHeadline: {headline}\nCategory: {category}\nTone: {tone}\nLength: ~{length_map[length]} words.\nInclude lede, quotes, context, and closing paragraph."
+        prompt = f"Write a news article.\nHeadline: {headline}\nCategory: {category}\nTone: {tone}\nLength: ~{length_map[length]} words."
         output = generate_with_spinner(prompt)
         st.text_area("Generated News Article", value=output, height=400)
         st.download_button("📥 Download Article", output, file_name=f"{headline[:20]}_news.txt")
@@ -134,11 +137,11 @@ elif tool == "News Article Writer":
 # -------- Story Writer --------
 elif tool == "Story Writer":
     st.header("📖 Story Writer")
-    plot = st.text_area("Story Idea:", "A teenager discovers a hidden library beneath the city.")
+    plot = st.text_area("Story Idea:")
     genre = st.selectbox("Genre:", ["Fantasy", "Adventure", "Sci-Fi", "Horror", "Romance", "Drama"])
     wc = st.slider("Story length (words):", 200, 4000, 800)
     if st.button("Generate Story"):
-        prompt = f"Write a story in {genre} style based on: {plot}. Word count: {wc}. Make it creative, emotional, with characters and a satisfying ending."
+        prompt = f"Write a {genre} story based on: {plot}. Word count: {wc}."
         output = generate_with_spinner(prompt)
         st.text_area("Generated Story", value=output, height=400)
         st.download_button("📥 Download Story", output, file_name="story.txt")
@@ -147,11 +150,11 @@ elif tool == "Story Writer":
 elif tool == "Social Media Caption Writer":
     st.header("📱 Social Media Caption Writer")
     platform = st.selectbox("Platform:", ["Instagram", "TikTok", "Facebook", "X / Twitter"])
-    desc = st.text_area("Content Description:", "A cozy coffee shop on a rainy day.")
+    desc = st.text_area("Content Description:")
     vibe = st.selectbox("Vibe:", ["Aesthetic", "Funny", "Motivational", "Short & Catchy", "Informative"])
     count = st.slider("Number of captions:", 1, 10, 5)
     if st.button("Generate Captions"):
-        prompt = f"Generate {count} captions for {platform}. Vibe: {vibe}. Content: {desc}. Keep short, catchy, and scroll-stopping."
+        prompt = f"Generate {count} captions for {platform}. Vibe: {vibe}. Content: {desc}."
         output = generate_with_spinner(prompt)
         st.text_area("Generated Captions", value=output, height=300)
         st.download_button("📥 Download Captions", output, file_name="captions.txt")
@@ -159,10 +162,10 @@ elif tool == "Social Media Caption Writer":
 # -------- SEO Keyword Generator --------
 elif tool == "SEO Keyword Generator":
     st.header("🔍 SEO Keyword Generator")
-    topic = st.text_input("Topic / Seed Keyword:", "AI productivity tools")
+    topic = st.text_input("Topic / Seed Keyword:")
     difficulty = st.selectbox("Difficulty:", ["Easy", "Medium", "Hard"])
     if st.button("Generate Keywords"):
-        prompt = f"Generate SEO keywords for: {topic}. Difficulty: {difficulty}. Return 15 primary, 15 LSI, 10 long-tail, and 5 blog post ideas."
+        prompt = f"Generate SEO keywords for: {topic}. Difficulty: {difficulty}."
         output = generate_with_spinner(prompt)
         st.text_area("Generated Keywords", value=output, height=300)
         st.download_button("📥 Download Keywords", output, file_name="seo_keywords.txt")
@@ -171,10 +174,10 @@ elif tool == "SEO Keyword Generator":
 elif tool == "AI Email Writer":
     st.header("📧 AI Email Writer")
     email_type = st.selectbox("Email Type:", ["Formal", "Casual", "Business", "Complaint", "Apology", "Job Application"])
-    subject = st.text_input("Subject Line:", "Request for Collaboration")
-    details = st.text_area("Email Details:", "Introduce yourself, explain the request, offer next steps.")
+    subject = st.text_input("Subject Line:")
+    details = st.text_area("Email Details:")
     if st.button("Generate Email"):
-        prompt = f"Write a {email_type.lower()} email. Subject: {subject}. Include: {details}. Polite, actionable, and professional."
+        prompt = f"Write a {email_type.lower()} email. Subject: {subject}. Details: {details}."
         output = generate_with_spinner(prompt)
         st.text_area("Generated Email", value=output, height=300)
         st.download_button("📥 Download Email", output, file_name="email.txt")
