@@ -2,7 +2,7 @@ import requests
 import os
 
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-MODEL_NAME = "arcee-ai/trinity-mini:free"
+MODEL_NAME = "openai/gpt-oss-120b:free"
 
 
 def call_openrouter(prompt):
